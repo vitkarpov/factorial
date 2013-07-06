@@ -14,7 +14,7 @@
 	 * Использует статическую переменную функции
 	 * для записи уже найденных значений факториала
 	 *
-	 * @name fact
+	 * @name factorial
 	 * @param {Number} n
 	 */	
 	function factorial(n) {
@@ -34,6 +34,7 @@
 	/*
 	 * возвращает массив цифр числа
 	 *
+	 * @name getDigits
 	 * @param {Nubmer} num Число, цифры которого нужно достать
 	 */
 	function getDigits(num) {
@@ -60,6 +61,7 @@
 	 * Например, 145 = 1! + 4! + 5!
 	 * Возвращает boolean
 	 *
+	 * @name checkFactorialSum
 	 * @param {Array} digits числа, для которых нужно проверить равенство
 	 */
 	function checkFactorialSum(digits) {
@@ -83,6 +85,7 @@
 		results: {},
 		/*
 		 * Запускает приложение в работу
+		 * @name run
 		 * @param {Number} max Правая граница интервала поиска
 		 */
 		run: function(max){
