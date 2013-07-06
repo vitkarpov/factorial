@@ -89,10 +89,7 @@
 		 * @param {Number} max Правая граница интервала поиска
 		 */
 		run: function(max){
-			var digits = [],
-					_i = 0,
-					startTime,
-					result = [];
+			var startTime, result = [];
 
 			//установим дефолтное значение правой границы интервала, если не указано явно
 			if (!max) {
