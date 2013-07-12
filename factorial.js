@@ -8,7 +8,7 @@
  * 2. время работы в миллисекундах
  * 3. массив найденных чисел
  */
-checkBetweenZeroAnd = (function(global) {
+CheckBetweenZeroAnd = (function(global) {
 
 	var 
 		/* 
@@ -116,7 +116,7 @@ checkBetweenZeroAnd = (function(global) {
 
 }(window));
 
-f1000 = new checkBetweenZeroAnd(1000);
+f1000 = new CheckBetweenZeroAnd(1000);
 /*
  * {
  * 	maxEdge: 1000,
@@ -126,7 +126,7 @@ f1000 = new checkBetweenZeroAnd(1000);
  */
 console.log(f1000);
 
-f100000 = new checkBetweenZeroAnd(100000);
+f100000 = new CheckBetweenZeroAnd(100000);
 /*
  * {
  * 	maxEdge: 100000,
@@ -136,7 +136,7 @@ f100000 = new checkBetweenZeroAnd(100000);
  */
 console.log(f100000);
 
-f1000000 = new checkBetweenZeroAnd(1000000);
+f1000000 = new CheckBetweenZeroAnd(1000000);
 /*
  * {
  * 	maxEdge: 1000000,
