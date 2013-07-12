@@ -1,4 +1,14 @@
-(function(global) {
+/*
+ * 		функция-конструктор ищет все числа,
+ * 		факториалы цифр которых в сумме дают это число,
+ * 		в интервале от нуля до заданного числа.
+ * 		Возвращает объект с результатами:
+ *
+ * 1. правая граница интервала поиска
+ * 2. время работы в миллисекундах
+ * 3. массив найденных чисел
+ */
+checkBetweenZeroAnd = (function(global) {
 
 	var 
 		/* 
@@ -14,30 +24,30 @@
 	 * Использует статическую переменную функции
 	 * для записи уже найденных значений факториала
 	 *
-	 * @name factorial
+	 * @name _factorial
 	 * @param {Number} n
 	 */	
-	function factorial(n) {
-		if (!factorial.cache) {
-			factorial.cache = {
+	function _factorial(n) {
+		if (!_factorial.cache) {
+			_factorial.cache = {
 				"0": 1,
 				"1": 1,
 				"2": 2
 			}
 		}
-		if (!factorial.cache.hasOwnProperty(n)) {
-			factorial.cache[n] = n*factorial(n-1)
+		if (!_factorial.cache.hasOwnProperty(n)) {
+			_factorial.cache[n] = n*_factorial(n-1)
 		}
-		return factorial.cache[n]
+		return _factorial.cache[n]
 	}
 
 	/*
 	 * возвращает массив цифр числа
 	 *
-	 * @name getDigits
+	 * @name _getDigits
 	 * @param {Nubmer} num Число, цифры которого нужно достать
 	 */
-	function getDigits(num) {
+	function _getDigits(num) {
 		var digits = [],
 				_i = 0,
 				strNum, _l;
@@ -61,108 +71,77 @@
 	 * Например, 145 = 1! + 4! + 5!
 	 * Возвращает boolean
 	 *
-	 * @name checkFactorialSum
+	 * @name _checkFactorialSum
 	 * @param {Array} digits числа, для которых нужно проверить равенство
 	 */
-	function checkFactorialSum(digits) {
+	function _checkFactorialSum(digits) {
 		var _l = digits.length,
 				sum = 0,
 				num;
 
 		while (_l--) {
-			sum += factorial(digits[_l]);
+			sum += _factorial(digits[_l]);
 		}
 		num = +digits.join('');
 		
 		return sum == num;
 	}
 
-	//приложение в глобальном пространстве имен
-	global.app = {
-		/*
-		 * объект для результатов работы
-		 */
-		results: {},
-		/*
-		 * Запускает приложение в работу
-		 * @name run
-		 * @param {Number} max Правая граница интервала поиска
-		 */
-		run: function(max){
-			var startTime, result = [];
+	return function(max) {
+		var startTime,
+				result = [];
 
-			//установим дефолтное значение правой границы интервала, если не указано явно
-			if (!max) {
-				max = defaultMax;
-			}
-
-			//запишем max в результаты, пока не затерли
-			this.results.maxEdge = max
-
-			//запишем время перед началом вычислений
-			startTime = Date.now()
-
-			//пройдемся по всему интервалу чисел
-			while (max--) {
-				//проверим равенство для набора цифр каждого числа
-				if (checkFactorialSum( getDigits(max) )){
-					//если есть совпадение, то запишем в результат
-					result.push(max);
-				}
-			}
-
-			/*
-			 *    результаты работы программы:
-			 * 1. правая граница интервала поиска
-			 * 2. время работы в миллисекундах
-			 * 3. массив найденных чисел
-			 */
-			this.results.workTime = Date.now() - startTime,
-			this.results.foundNumbers = result
+		//установим дефолтное значение правой границы интервала, если не указано явно
+		if (!max) {
+			max = defaultMax;
 		}
+
+		//запишем правую границу интервала, пока не затерли значение max
+		this.maxEdge = max;
+
+		startTime = Date.now();
+
+		//пройдемся по всему интервалу чисел
+		while (max--) {
+			//проверим равенство для набора цифр каждого числа
+			if (_checkFactorialSum( _getDigits(max) )){
+				//если есть совпадение, то запишем в результат
+				result.push(max);
+			}
+		}
+
+		this.workTime = Date.now() - startTime;
+		this.foundNumbers = result;
 	}
+
 }(window));
 
-app.run(1000);
-
+f1000 = new checkBetweenZeroAnd(1000);
 /*
- * app.results = {
+ * {
  * 	maxEdge: 1000,
- *  workTime: ~5
+ *  workTime: 5
  *  foundNumbers: [0, 1, 2, 145]
  * }	
  */
-console.log(app.results);
+console.log(f1000);
 
-app.run(100000);
-
+f100000 = new checkBetweenZeroAnd(100000);
 /*
- * app.results = {
+ * {
  * 	maxEdge: 100000,
- *  workTime: ~348
+ *  workTime: 348
  *  foundNumbers: [0, 1, 2, 145, 40585]
  * }	
  */
-console.log(app.results);
+console.log(f100000);
 
-app.run(1000000);
-
+f1000000 = new checkBetweenZeroAnd(1000000);
 /*
- * app.results = {
+ * {
  * 	maxEdge: 1000000,
- *  workTime: ~3612
+ *  workTime: 3612
  *  foundNumbers: [0, 1, 2, 145, 40585]
  * }	
  */
-console.log(app.results);
-
-app.run(10000000);
-
-/*
- * app.results = {
- * 	maxEdge: 10000000,
- *  workTime: ~39545
- *  foundNumbers: [0, 1, 2, 145, 40585]
- * }	
- */
-console.log(app.results);
+console.log(f1000000);
